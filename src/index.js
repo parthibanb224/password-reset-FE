@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import UsersContextProvider from './context/Users.context';
-console.log(process.env)
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>

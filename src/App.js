@@ -8,6 +8,7 @@ import AccountCreated from './pages/AccountCreated';
 import ResetPassword from './pages/ResetPassword';
 import PasswordChanged from './pages/PasswordChanged';
 import LoginSuccess from './pages/LoginSuccess';
+import Dashboard from './pages/Dashboard';
 
 
 function App() {
@@ -20,9 +21,10 @@ function App() {
         <Route path='/signUp' Component={SignUp}></Route>
         <Route path='/forgot' Component={Forgot}></Route>
         <Route path='/AccountCreated' Component={AccountCreated}></Route>
-        <Route path='/ResetPassword' Component={ResetPassword}></Route>
+        <Route path='/ResetPassword/:token' Component={ResetPassword}></Route>
         <Route path='/passwordChanged' Component={PasswordChanged}></Route>
         <Route path='/loginSuccess' Component={LoginSuccess}></Route>
+        <Route path='/dashboard' Component={Dashboard}></Route>
       </Routes>
     </div>
   );

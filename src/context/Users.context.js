@@ -8,7 +8,8 @@ const UserContext = createContext({
     input : [],
     setInput : () => Promise,
     handleSignup : () => null,
-    handleLogin : () => null
+    handleLogin : () => null,
+    handleMail : () => null
 })
 
 export const useUser = () => useContext(UserContext);
@@ -62,13 +63,29 @@ export default function UsersContextProvider({children}) {
             })
     }
 
+
+    const handleMail = (event) => {
+        event.preventDefault();
+        const FORGOT_URL = process.env.NODE_ENV === 'development'? `${process.env.REACT_APP_DEV_URL_FOR_BACKEND}/forgot` : `${process.env.REACT_APP_PRO_URL_FOR_BACKEND}/forgot`;
+        axios.put(FORGOT_URL,input)
+        .then(response => {
+            if(response.data.success){
+                alert(`${response.data.message} => Go to Mail`)
+            }
+        })
+        .catch(err => {
+            alert("Enter Valid Email");
+        })
+    }
+
     const value = {
         user,
         setUser,
         input,
         setInput,
         handleSignup,
-        handleLogin
+        handleLogin,
+        handleMail
     }
 
   return (
