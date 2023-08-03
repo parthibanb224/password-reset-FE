@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const UserContext = createContext({
     user : [],
@@ -9,7 +11,9 @@ const UserContext = createContext({
     setInput : () => Promise,
     handleSignup : () => null,
     handleLogin : () => null,
-    handleMail : () => null
+    handleMail : () => null,
+    loaded : "",
+    setLoaded : () => Promise
 })
 
 export const useUser = () => useContext(UserContext);
@@ -18,6 +22,7 @@ export default function UsersContextProvider({children}) {
 
     const [user,setUser] = useState([]);
     const [input,setInput] = useState(null);
+    const [loaded,setLoaded] = useState("")
 
     useEffect(() => {
         const URL = process.env.NODE_ENV === 'development'? `${process.env.REACT_APP_DEV_URL_FOR_BACKEND}/users` : `${process.env.REACT_APP_PRO_URL_FOR_BACKEND}/users`;
@@ -66,15 +71,20 @@ export default function UsersContextProvider({children}) {
 
     const handleMail = (event) => {
         event.preventDefault();
+        // toast("Email Sending.....",{autoClose: 2000,pauseOnHover: false});
+        setLoaded("true");
         const FORGOT_URL = process.env.NODE_ENV === 'development'? `${process.env.REACT_APP_DEV_URL_FOR_BACKEND}/forgot` : `${process.env.REACT_APP_PRO_URL_FOR_BACKEND}/forgot`;
         axios.put(FORGOT_URL,input)
         .then(response => {
             if(response.data.success){
-                alert(`${response.data.message} => Go to Mail`)
+                setLoaded("false");
+                toast("Email Sending Successfully");
+                // alert(`${response.data.message} => Go to Mail`)
             }
         })
         .catch(err => {
-            alert("Enter Valid Email");
+            setLoaded("false");
+            toast("Enter Valid Email");
         })
     }
 
@@ -85,7 +95,8 @@ export default function UsersContextProvider({children}) {
         setInput,
         handleSignup,
         handleLogin,
-        handleMail
+        handleMail,
+        loaded
     }
 
   return (

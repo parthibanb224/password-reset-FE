@@ -3,10 +3,12 @@ import MyImage from '../Assets/forgot-password.png'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useUser } from '../context/Users.context';
+import { ToastContainer } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 export default function Forgot() {
 
-    const {input,setInput,handleMail} = useUser();
+    const {input,setInput,handleMail,loaded} = useUser();
 
     return (
         <div>
@@ -24,6 +26,7 @@ export default function Forgot() {
                                 Send Reset Code
                             </Button>
                         </div>
+                        {loaded === "true"? <p style={{color:"black",textAlign:"center",marginTop:"10px"}}>Loading...</p> : <ToastContainer />}
                     </Form>
                 </div>
             </div>
